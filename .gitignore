@@ -42,8 +42,8 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-#---------------------------------------------------------
-#UnityIgnore
+# ---------------------------------------------------------
+#  UnityIgnore
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
