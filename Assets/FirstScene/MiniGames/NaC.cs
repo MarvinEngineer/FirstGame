@@ -13,8 +13,12 @@ public class NaC : MonoBehaviour {
         List<ICubeView> list = new List<ICubeView>();
         GetComponentsInChildren(false, list);
         main = GetComponentInChildren<IControlView>();
-        presenter = new NaC_Presenter(list, model, main);        
-	}
+        presenter = new NaC_Presenter(list, model, main);
+
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
 	
 	// Update is called once per frame
 	void Update () {

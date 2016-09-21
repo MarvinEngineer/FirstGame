@@ -1,15 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 
 public class MainView : MonoBehaviour, IMainView {
+
+    [SerializeField]    private GameObject Player;
+    [SerializeField]    private GameObject PlayerController;
+    [SerializeField]    private GameObject EscMenu;
+    [SerializeField]    private List<GameObject> MiniGames;
 
     public enum State { Run, EscMenu, InventoryMenu, Pause };
 
     private bool isGameOver;
 
-    private State currentState
+    private State currentState;
+    public State CurrentState
     {
         get { return currentState; }
         set
@@ -23,6 +30,7 @@ public class MainView : MonoBehaviour, IMainView {
     {
         currentState = State.Run;
         isGameOver = false;
+        Player.GetComponentInChildren<PlayerScript>().MinigameStarted += StartMinigame;
     }
 
     void Update()
@@ -55,6 +63,12 @@ public class MainView : MonoBehaviour, IMainView {
     }
 
     public event EventHandler<GameStateEventArgs> GameStateUpdated = delegate { };
+
+    private void StartMinigame (object sender, StartMinigameEventArgs e)
+    {
+        PlayerController.SetActive(false);
+        MiniGames[e.MinigameIndex].SetActive(true);
+    }
 }
 
 
@@ -68,6 +82,16 @@ public class GameStateEventArgs : EventArgs
         GameState = gameState;
     }
 }
+
+public class StartMinigameEventArgs : EventArgs
+{
+    public int MinigameIndex { get; set; }
+    public StartMinigameEventArgs(int index)
+    {
+        MinigameIndex = index;
+    }
+}
+
 
 #endregion EventArgs
 

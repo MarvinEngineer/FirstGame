@@ -1,20 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class PlayerScript : MonoBehaviour {
 
-    bool isOpenEscapeMenu;
-    bool isOpenInventory;
-
     [SerializeField] private Camera cam;
 
-	// Use this for initialization
-	void Start () {
-        cam = Camera.main;
-	
+    public event EventHandler<StartMinigameEventArgs> MinigameStarted = delegate { };
+
+	void Start ()
+    {
+        cam = Camera.main;	
 	}
 	
-	// Update is called once per frame
 	void Update () {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -23,16 +21,7 @@ public class PlayerScript : MonoBehaviour {
         {
             Debug.DrawLine(ray.origin, hit.point);
             if ((Input.GetKeyUp(KeyCode.F)) && (hit.transform.gameObject.GetComponent<MiniGameSphere>()) != null)
-                Debug.Log("Work!");
+                MinigameStarted(this, new StartMinigameEventArgs(0));
         }
-
     }
-
-    void FixUpdate()
-    {
-
-
-    }
-
-
 }
