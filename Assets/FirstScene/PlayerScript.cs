@@ -26,7 +26,6 @@ public class PlayerScript : MonoBehaviour {
                 Debug.Log("Work!");
         }
 
-        GetInput();           
     }
 
     void FixUpdate()
@@ -35,17 +34,5 @@ public class PlayerScript : MonoBehaviour {
 
     }
 
-    private void GetInput()
-    {
-        if (Input.GetKey(KeyCode.Escape))
-        {
 
-        }
-
-        if (Input.GetKey(KeyCode.I))
-        {
-
-        }
-
-    }
 }

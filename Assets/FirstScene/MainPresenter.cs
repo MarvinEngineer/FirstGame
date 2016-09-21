@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MainPresenter : MonoBehaviour {
+public class MainPresenter {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    #region Инициализация
+
+    private IMainModel model = null;
+    private IMainView view = null;
+
+
+    #endregion Инициализация
+
 }

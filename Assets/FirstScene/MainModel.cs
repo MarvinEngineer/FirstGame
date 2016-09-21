@@ -1,15 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MainModel : MonoBehaviour {
+public class MainModel : MonoBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    enum GameProgress { New, _1stMinigameWin, _2ndMinigameWin };
+
+
+    private GameObject control1;
+    private GameObject control2;
+    private GameObject control3;
+
+    public MainModel()
+    {
+
+    }
+
+
+}
+
+
+    
+public interface IMainModel
+{
+
 }

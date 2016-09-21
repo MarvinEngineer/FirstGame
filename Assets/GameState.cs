@@ -1,58 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
-public class GameState : MonoBehaviour {
+public class GameState {
 
-    enum State { Run, EscMenu, GameOver, InventoryMenu };
+    public enum State { Run, EscMenu, GameOver, InventoryMenu, Pause };
 
-    private State currentState;
-
-    [SerializeField]    private GameObject control1;
-    [SerializeField]    private GameObject control2;
-    [SerializeField]    private GameObject control3;
-
-
-    
-
-
-    // Use this for initialization
-    void Start () {
-
-        currentState = State.Run;
-
-    }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-    private void ChangeState(string _newState)
+    public State state
     {
-        switch(_newState)
-        {
-            case "run":
-                {
-                    currentState = State.Run;
-                    break;
-                }
-            case "gameover":
-                {
-                    currentState = State.GameOver;
-                    break;
-                }
-            case "esc":
-                {
-                    currentState = State.EscMenu;
-                    break;
-                }
-            case "inventory":
-                {
-                    currentState = State.InventoryMenu;
-                    break;
-                }
-        }
+        get;
+        set;
     }
 
+    public GameState()
+    {
+        state = State.Run;
+    }
+
+    public void ChangeState(State s)
+    {
+        state = s;
+    }
 
 }
