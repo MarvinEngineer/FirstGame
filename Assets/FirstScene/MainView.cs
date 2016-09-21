@@ -11,7 +11,7 @@ public class MainView : MonoBehaviour, IMainView {
     [SerializeField]    private GameObject EscMenu;
     [SerializeField]    private List<GameObject> MiniGames;
 
-    public enum State { Run, EscMenu, InventoryMenu, Pause };
+    public enum State { Run, EscMenu, InventoryMenu, Pause, Minigame };
 
     private bool isGameOver;
 
@@ -35,7 +35,7 @@ public class MainView : MonoBehaviour, IMainView {
 
     void Update()
     {
-
+        GetInput();
     }
 
     private void GetInput()
@@ -64,10 +64,49 @@ public class MainView : MonoBehaviour, IMainView {
 
     public event EventHandler<GameStateEventArgs> GameStateUpdated = delegate { };
 
+    private void SwitchInterface (object sender, GameStateEventArgs e)
+    {
+        switch(e.GameState)
+        {
+            case State.Run:
+                {
+                    Player.SetActive(true);
+                    PlayerController.SetActive(true);
+                    PlayerController.GetComponent<FirstPersonController>().enabled = true;
+
+                    EscMenu.SetActive(false);
+                    foreach (GameObject g in MiniGames)
+                        g.SetActive(false);
+                    break;
+                }
+            case State.EscMenu:
+                {
+                    Player.SetActive(true);
+                    PlayerController.SetActive(true);
+                    PlayerController.GetComponent<FirstPersonController>().enabled = false;
+
+                    EscMenu.SetActive(true);
+                    foreach (GameObject g in MiniGames)
+                        g.SetActive(false);
+                    break;
+                }
+            case State.InventoryMenu:
+                {
+                    Player.SetActive(true);
+                    PlayerController.SetActive(true);
+                    EscMenu.SetActive(false);
+                    foreach (GameObject g in MiniGames)
+                        g.SetActive(false);
+                    break;
+                }
+        }
+    }
+
     private void StartMinigame (object sender, StartMinigameEventArgs e)
     {
         PlayerController.SetActive(false);
         MiniGames[e.MinigameIndex].SetActive(true);
+        currentState = State.Minigame;
     }
 }
 

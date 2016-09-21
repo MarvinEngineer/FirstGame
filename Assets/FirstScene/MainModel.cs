@@ -2,25 +2,32 @@
 using System.Collections;
 using System;
 
-public class MainModel : MonoBehaviour
+public class MainModel : MonoBehaviour, IMainModel
 {
-    private enum GameProgress { New, _1stMinigameWin, _2ndMinigameWin };
+    private enum GameProgress { New, _1stMinigameWin, _2ndMinigameWin, GameOver };
 
     private Player player;
+
+    public event EventHandler PlayerDead;
 
     public MainModel()
     {
         player = new Player();
     }
 
-
+    public void UpdateModel()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 
     
 public interface IMainModel
 {
+    event EventHandler PlayerDead;
 
+    void UpdateModel();
 }
 
 public class Player
@@ -58,3 +65,5 @@ public class Player
 
 
 }
+
+

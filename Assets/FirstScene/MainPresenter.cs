@@ -8,6 +8,10 @@ public class MainPresenter {
     private IMainModel model = null;
     private IMainView view = null;
 
+    public MainPresenter()
+    {
+
+    }
 
     #endregion Инициализация
 

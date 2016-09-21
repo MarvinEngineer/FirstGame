@@ -96,7 +96,6 @@ public class NaC_Game
 
     private void Win()
     {
-        GameObject.Find("GameProgress").GetComponent<GameProgress>().Win_NaC();
         Debug.Log("win");
     }
 

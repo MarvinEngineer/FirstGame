@@ -4,7 +4,7 @@ using System;
 
 public class PlayerScript : MonoBehaviour {
 
-    [SerializeField] private Camera cam;
+    private Camera cam;
 
     public event EventHandler<StartMinigameEventArgs> MinigameStarted = delegate { };
 
