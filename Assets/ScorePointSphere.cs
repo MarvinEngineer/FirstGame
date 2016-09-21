@@ -12,4 +12,9 @@ public class ScorePointSphere : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name != "Player") Debug.Log("Score++");
+    }
 }
