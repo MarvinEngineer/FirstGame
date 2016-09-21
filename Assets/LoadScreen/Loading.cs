@@ -23,6 +23,7 @@ public class Loading : MonoBehaviour {
     public void LoadALevel(string levelName)
     {
         async = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Single);
+        Destroy(GameObject.Find("ChangeObject"));
         StartCoroutine(Load());
     }
 

@@ -28,9 +28,10 @@ public class MainView : MonoBehaviour, IMainView {
 
     void Start()
     {
-        currentState = State.Run;
+        CurrentState = State.Run;
         isGameOver = false;
         Player.GetComponentInChildren<PlayerScript>().MinigameStarted += StartMinigame;
+        GameStateUpdated += SwitchInterface;
     }
 
     void Update()
@@ -39,21 +40,34 @@ public class MainView : MonoBehaviour, IMainView {
     }
 
     private void GetInput()
-    {
-        if (Input.GetKey(KeyCode.Escape))
+    {        
+        if (Input.GetKeyUp(KeyCode.Escape))
         {
-            if (currentState == State.Run)
-                currentState = State.EscMenu;
-            if ((currentState == State.EscMenu) || (currentState == State.InventoryMenu))
-                currentState = State.Run;
+            if (CurrentState == State.Run)
+            {
+                CurrentState = State.EscMenu;
+                return;
+            }
+            if ((CurrentState == State.EscMenu) || (CurrentState == State.InventoryMenu))
+            {
+                CurrentState = State.Run;
+                return;
+            }
+            Debug.Log("Esc");
         }
 
-        if (Input.GetKey(KeyCode.I))
+        if (Input.GetKeyUp(KeyCode.I))
         {
-            if (currentState == State.Run)
-                currentState = State.InventoryMenu;
-            if (currentState == State.InventoryMenu)
-                currentState = State.Run;
+            if (CurrentState == State.Run)
+            {
+                CurrentState = State.InventoryMenu;
+                return;
+            }
+            if (CurrentState == State.InventoryMenu)
+            {
+                CurrentState = State.Run;
+                return;
+            }
         }
     }
 
@@ -74,6 +88,10 @@ public class MainView : MonoBehaviour, IMainView {
                     PlayerController.SetActive(true);
                     PlayerController.GetComponent<FirstPersonController>().enabled = true;
 
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
+                    Time.timeScale = 1f;
+
                     EscMenu.SetActive(false);
                     foreach (GameObject g in MiniGames)
                         g.SetActive(false);
@@ -85,6 +103,10 @@ public class MainView : MonoBehaviour, IMainView {
                     PlayerController.SetActive(true);
                     PlayerController.GetComponent<FirstPersonController>().enabled = false;
 
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                    Time.timeScale = 0f;
+
                     EscMenu.SetActive(true);
                     foreach (GameObject g in MiniGames)
                         g.SetActive(false);
@@ -94,6 +116,12 @@ public class MainView : MonoBehaviour, IMainView {
                 {
                     Player.SetActive(true);
                     PlayerController.SetActive(true);
+                    PlayerController.GetComponent<FirstPersonController>().enabled = false;
+
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                    Time.timeScale = 0f;
+
                     EscMenu.SetActive(false);
                     foreach (GameObject g in MiniGames)
                         g.SetActive(false);
@@ -106,34 +134,9 @@ public class MainView : MonoBehaviour, IMainView {
     {
         PlayerController.SetActive(false);
         MiniGames[e.MinigameIndex].SetActive(true);
-        currentState = State.Minigame;
+        CurrentState = State.Minigame;
     }
 }
-
-
-#region EventArgs
-
-public class GameStateEventArgs : EventArgs
-{
-    public MainView.State GameState { get; set; }
-    public GameStateEventArgs(MainView.State gameState)
-    {
-        GameState = gameState;
-    }
-}
-
-public class StartMinigameEventArgs : EventArgs
-{
-    public int MinigameIndex { get; set; }
-    public StartMinigameEventArgs(int index)
-    {
-        MinigameIndex = index;
-    }
-}
-
-
-#endregion EventArgs
-
 
 public interface IMainView
 {

@@ -56,7 +56,7 @@ using UnityStandardAssets.CrossPlatformInput;
     public void SetCursorLock(bool value)
     {
         lockCursor = value;
-        if(!lockCursor)
+        if (!lockCursor)
         {//we force unlock the cursor if the user disable the cursor locking helper
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
