@@ -50,7 +50,7 @@ using UnityStandardAssets.CrossPlatformInput;
             camera.localRotation = m_CameraTargetRot;
         }
 
-        UpdateCursorLock();
+        //UpdateCursorLock();
     }
 
     public void SetCursorLock(bool value)
@@ -60,6 +60,11 @@ using UnityStandardAssets.CrossPlatformInput;
         {//we force unlock the cursor if the user disable the cursor locking helper
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 

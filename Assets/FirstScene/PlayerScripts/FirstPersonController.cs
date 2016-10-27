@@ -38,7 +38,7 @@ public class FirstPersonController : MonoBehaviour
     private float m_StepCycle;
     private float m_NextStep;
     private bool m_Jumping;
-    private AudioSource m_AudioSource;
+    //private AudioSource m_AudioSource;
 
     // Use this for initialization
     private void Start()
@@ -51,7 +51,7 @@ public class FirstPersonController : MonoBehaviour
         m_StepCycle = 0f;
         m_NextStep = m_StepCycle/2f;
         m_Jumping = false;
-        m_AudioSource = GetComponent<AudioSource>();
+        //m_AudioSource = GetComponent<AudioSource>();
 		m_MouseLook.Init(transform , m_Camera.transform);
     }
 
@@ -128,7 +128,7 @@ public class FirstPersonController : MonoBehaviour
         ProgressStepCycle(speed);
         UpdateCameraPosition(speed);
 
-        m_MouseLook.UpdateCursorLock();
+        //m_MouseLook.UpdateCursorLock();
     }
 
 
@@ -252,6 +252,11 @@ public class FirstPersonController : MonoBehaviour
             return;
         }
         body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
+    }
+
+    public void LockCursor(bool t)
+    {
+        m_MouseLook.SetCursorLock(t);
     }
 }
 

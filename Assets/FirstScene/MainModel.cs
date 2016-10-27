@@ -62,8 +62,7 @@ public class Player
         isDead = false;
         health = h;
     }
-
-
+    
 }
 
 

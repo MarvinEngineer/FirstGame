@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using System;
+using UnityEngine.SceneManagement;
 
 public class MenuSwitcher : MonoBehaviour {
 
@@ -29,7 +30,8 @@ public class MenuSwitcher : MonoBehaviour {
                 }
             case "new":
                 {
-                    gameObject.GetComponent<LevelLoader>().LoadALevel("newScene");
+                    PlayerPrefs.SetString("NextLevel", "newScene");
+                    SceneManager.LoadScene("loading", LoadSceneMode.Single);
                     break;
                 }
             case "load":
@@ -87,7 +89,6 @@ public class MenuSwitcher : MonoBehaviour {
 
     void Start()
     {       
-        gameObject.AddComponent<LevelLoader>();
         Menu_item_control[] array = GetComponentsInChildren<Menu_item_control>();
 
         int i = 1;

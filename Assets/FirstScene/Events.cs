@@ -31,3 +31,11 @@ public class SelectMenuEventArgs : EventArgs
 }
 
 
+public class SelectSaveEventArgs : EventArgs
+{
+    public string saveName { get; set; }
+    public SelectSaveEventArgs(string s)
+    {
+        saveName = s;
+    }
+}

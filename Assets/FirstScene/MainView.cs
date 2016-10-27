@@ -14,8 +14,10 @@ public class MainView : MonoBehaviour, IMainView {
     public enum State { Run, EscMenu, InventoryMenu, Pause, Minigame };
 
     private bool isGameOver;
-
     private State currentState;
+    private EscMenuView emv;
+    private FirstPersonController fpc;
+
     public State CurrentState
     {
         get { return currentState; }
@@ -32,6 +34,10 @@ public class MainView : MonoBehaviour, IMainView {
         isGameOver = false;
         Player.GetComponentInChildren<PlayerScript>().MinigameStarted += StartMinigame;
         GameStateUpdated += SwitchInterface;
+
+        fpc = PlayerController.GetComponent<FirstPersonController>();
+        emv = EscMenu.GetComponent<EscMenuView>();
+        emv.BackButtonClicked += BackToGame;
     }
 
     void Update()
@@ -53,7 +59,6 @@ public class MainView : MonoBehaviour, IMainView {
                 CurrentState = State.Run;
                 return;
             }
-            Debug.Log("Esc");
         }
 
         if (Input.GetKeyUp(KeyCode.I))
@@ -86,28 +91,29 @@ public class MainView : MonoBehaviour, IMainView {
                 {
                     Player.SetActive(true);
                     PlayerController.SetActive(true);
-                    PlayerController.GetComponent<FirstPersonController>().enabled = true;
 
-                    Cursor.lockState = CursorLockMode.Locked;
-                    Cursor.visible = false;
                     Time.timeScale = 1f;
 
                     EscMenu.SetActive(false);
                     foreach (GameObject g in MiniGames)
                         g.SetActive(false);
+
+                    fpc.enabled = true;
+                    fpc.LockCursor(true);
                     break;
                 }
             case State.EscMenu:
                 {
                     Player.SetActive(true);
                     PlayerController.SetActive(true);
-                    PlayerController.GetComponent<FirstPersonController>().enabled = false;
 
-                    Cursor.lockState = CursorLockMode.None;
-                    Cursor.visible = true;
+                    fpc.LockCursor(false);
+                    fpc.enabled = false;
+
                     Time.timeScale = 0f;
 
                     EscMenu.SetActive(true);
+                    emv.Main();
                     foreach (GameObject g in MiniGames)
                         g.SetActive(false);
                     break;
@@ -116,7 +122,7 @@ public class MainView : MonoBehaviour, IMainView {
                 {
                     Player.SetActive(true);
                     PlayerController.SetActive(true);
-                    PlayerController.GetComponent<FirstPersonController>().enabled = false;
+                    fpc.enabled = false;
 
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;
@@ -130,11 +136,16 @@ public class MainView : MonoBehaviour, IMainView {
         }
     }
 
-    private void StartMinigame (object sender, StartMinigameEventArgs e)
+    private void StartMinigame(object sender, StartMinigameEventArgs e)
     {
         PlayerController.SetActive(false);
         MiniGames[e.MinigameIndex].SetActive(true);
         CurrentState = State.Minigame;
+    }
+
+    private void BackToGame(object sender, GameStateEventArgs e)
+    {
+        CurrentState = e.GameState;
     }
 }
 
