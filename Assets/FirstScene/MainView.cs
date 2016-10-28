@@ -36,6 +36,8 @@ public class MainView : MonoBehaviour, IMainView {
         GameStateUpdated += SwitchInterface;
 
         fpc = PlayerController.GetComponent<FirstPersonController>();
+        fpc.LockCursor(true);
+
         emv = EscMenu.GetComponent<EscMenuView>();
         emv.BackButtonClicked += BackToGame;
     }
@@ -98,6 +100,7 @@ public class MainView : MonoBehaviour, IMainView {
                     foreach (GameObject g in MiniGames)
                         g.SetActive(false);
 
+
                     fpc.enabled = true;
                     fpc.LockCursor(true);
                     break;
@@ -105,7 +108,7 @@ public class MainView : MonoBehaviour, IMainView {
             case State.EscMenu:
                 {
                     Player.SetActive(true);
-                    PlayerController.SetActive(true);
+                    PlayerController.SetActive(false);
 
                     fpc.LockCursor(false);
                     fpc.enabled = false;

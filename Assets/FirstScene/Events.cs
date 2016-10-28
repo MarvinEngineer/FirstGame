@@ -39,3 +39,32 @@ public class SelectSaveEventArgs : EventArgs
         saveName = s;
     }
 }
+
+public class HealthChangedEventArgs : EventArgs
+{
+    public int difference { get; set; }
+    public HealthChangedEventArgs(int dif)
+    {
+        difference = dif;
+    }
+}
+
+public class CoinRaisedEventArgs : EventArgs
+{
+    public int points;
+    public CoinRaisedEventArgs(int p)
+    {
+        points = p;
+    }
+}
+
+public class PlayerInformationEventArgs : EventArgs
+{
+    public int scores;
+    public float hp;
+    public PlayerInformationEventArgs(int p, float h)
+    {
+        scores = p;
+        hp = h;
+    }
+}
